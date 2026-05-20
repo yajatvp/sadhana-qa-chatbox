@@ -83,7 +83,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
       </div>
       <p className="text-center text-[11px] text-gray-400 mt-2">
         Answers are based solely on curated sadhana teachings. For personalized
-        guidance, consult your guru.
+        guidance, consult KBUF team members.
       </p>
     </form>
   );
