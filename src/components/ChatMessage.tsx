@@ -34,7 +34,7 @@ export default function ChatMessage({ message }: MessageProps) {
             : 'bg-gradient-to-br from-saffron-400 to-sacred-500 text-white'
         }`}
       >
-        {isUser ? '👤' : '🙏'}
+        {isUser ? '👤' : <img src="/img/logo.webp" alt="KBUF" style={{width:'100%',height:'100%',borderRadius:'50%'}} />}
       </div>
 
       {/* Message Bubble */}
