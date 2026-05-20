@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Sadhana Guide — Spiritual Q&A',
+  title: 'KBUF Sadhana Q/A',
   description:
-    'Ask questions about spiritual sadhana practices and receive guidance based on authentic teachings.',
+    'Ask questions about KBUF sadhanas and receive guidance based on authentic teachings.',
 };
 
 export default function RootLayout({
