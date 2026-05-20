@@ -80,7 +80,7 @@ Remember: Only answer based on the context above. If the context doesn't contain
 
     // 5. Call Claude API
     const response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages,
