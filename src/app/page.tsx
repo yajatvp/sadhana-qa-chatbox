@@ -73,14 +73,14 @@ export default function Home() {
       <header className="flex-none px-6 py-4 border-b border-saffron-200 bg-white/60 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-saffron-400 to-sacred-500 flex items-center justify-center text-white text-lg">
-            🙏
+            <img src="/img/logo.webp" alt="KBUF" className="w-10 h-10 rounded-full" />
           </div>
           <div>
             <h1 className="text-xl font-semibold text-gray-800">
-              Sadhana Guide
+              KBUF Sadhana Q/A
             </h1>
             <p className="text-sm text-gray-500">
-              Ask questions about spiritual practices & sadhana
+              Ask questions about KBUF sadhanas
             </p>
           </div>
         </div>
@@ -91,15 +91,13 @@ export default function Home() {
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center px-4">
             <div className="w-20 h-20 rounded-full bg-gradient-to-br from-saffron-300 to-sacred-400 flex items-center justify-center text-3xl mb-6 shadow-lg">
-              🙏
+              <img src="/img/logo.webp" alt="KBUF" className="w-20 h-20 rounded-full" />
             </div>
             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
               Namaste 🙏
             </h2>
             <p className="text-gray-500 max-w-md mb-8">
-              I&apos;m here to help answer your questions about spiritual
-              sadhana practices. Ask me about nitya upasana, japa, deity
-              worship, vishesh sadhanas, and more.
+              Ask questions about KBUF sadhanas
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-lg">
               {[
@@ -129,7 +127,7 @@ export default function Home() {
         {isLoading && (
           <div className="flex items-start gap-3 message-enter">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-saffron-400 to-sacred-500 flex items-center justify-center text-white text-sm flex-shrink-0">
-              🙏
+              <img src="/img/logo.webp" alt="KBUF" className="w-8 h-8 rounded-full" />
             </div>
             <div className="bg-white/80 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
               <div className="flex gap-1.5">
