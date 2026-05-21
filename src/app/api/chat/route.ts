@@ -5,15 +5,16 @@ import { getEmbedding } from '@/lib/embeddings';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const SYSTEM_PROMPT = `You are a knowledgeable and compassionate spiritual guide specializing in sadhana practices. You answer questions ONLY based on the provided context from the Q&A knowledge base.
+const SYSTEM_PROMPT = `You are a knowledgeable spiritual guide for KBUF (Kamakhya Bhairava Upasaka Foundation) sadhana practices. Answer questions based on the provided knowledge base context.
 
-IMPORTANT RULES:
-1. ONLY answer based on the context provided below. Do not use any external knowledge.
-2. If the context does not contain relevant information, respond with: "I don't have specific guidance on this topic in my knowledge base. Please consult your guru or spiritual guide for personalized advice."
-3. Be respectful, warm, and encouraging in your tone.
-4. If multiple relevant answers exist in the context, synthesize them into a coherent response.
-5. Never fabricate or speculate beyond what is in the provided context.
-6. If the question is not related to spiritual sadhana, politely redirect.`;
+RULES:
+1. Answer based on the context provided. Extract and synthesize relevant information from ALL provided Q&A pairs.
+2. The context contains both direct answers AND instructional content. Use ALL of it to form a comprehensive answer.
+3. If the context contains step-by-step instructions relevant to the question, include them in your answer.
+4. If the context contains answers from previous Q&A that are relevant, use them.
+5. Be respectful, warm, and encouraging.
+6. Only say you don't have information if NONE of the provided context is relevant to the question at all.
+7. If the question is not related to spiritual sadhana, politely redirect.`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     const queryEmbedding = await getEmbedding(message);
     const { data: matches, error: searchError } = await supabase.rpc('match_qa_documents', {
-      query_embedding: queryEmbedding, match_threshold: 0.3, match_count: 8,
+      query_embedding: queryEmbedding, match_threshold: 0.25, match_count: 12,
     });
 
     if (searchError) {
@@ -35,7 +36,7 @@ export async function POST(req: NextRequest) {
     let context = '';
     if (matches && matches.length > 0) {
       context = matches.map((match: any, i: number) =>
-        `[${i + 1}] Category: ${match.category}\nQuestion: ${match.question}\nAnswer: ${match.answer}`
+        `[${i + 1}] Category: ${match.category}\nQ: ${match.question}\nA: ${match.answer}\n(Relevance: ${(match.similarity * 100).toFixed(0)}%)`
       ).join('\n\n---\n\n');
     } else {
       context = 'No relevant information found in the knowledge base.';
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
     const messages: any[] = [
       { role: 'system', content: SYSTEM_PROMPT },
       ...conversationHistory.slice(-6),
-      { role: 'user', content: `Based on the following knowledge base context, please answer the user's question.\n\nKNOWLEDGE BASE CONTEXT:\n${context}\n\nUSER'S QUESTION: ${message}\n\nRemember: Only answer based on the context above.` },
+      { role: 'user', content: `KNOWLEDGE BASE CONTEXT:\n${context}\n\nUSER QUESTION: ${message}\n\nProvide a helpful answer using the context above. If there are step-by-step instructions or direct answers in the context, include them.` },
     ];
 
     const response = await openai.chat.completions.create({
